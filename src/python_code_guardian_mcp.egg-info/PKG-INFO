@@ -1,0 +1,350 @@
+Metadata-Version: 2.4
+Name: python-code-guardian-mcp
+Version: 0.1.0
+Summary: MCP Server for comprehensive Python code quality checks
+Author-email: Adobe Engineers <opensource@adobe.com>
+License: MIT
+Project-URL: Homepage, https://github.com/adobe/python-code-guardian-mcp
+Project-URL: Documentation, https://python-code-guardian.readthedocs.io
+Project-URL: Repository, https://github.com/adobe/python-code-guardian-mcp.git
+Project-URL: Issues, https://github.com/adobe/python-code-guardian-mcp/issues
+Keywords: mcp,code-quality,linting,python,code-analysis,cursor,ide
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Quality Assurance
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: mcp>=0.9.0
+Requires-Dist: pylint>=2.17.0
+Requires-Dist: radon>=5.1.0
+Requires-Dist: codespell>=2.2.0
+Requires-Dist: coverage>=7.0.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: click>=8.0.0
+Requires-Dist: colorama>=0.4.6
+Requires-Dist: tabulate>=0.9.0
+Requires-Dist: jedi>=0.19.0
+Requires-Dist: pycodestyle>=2.11.0
+Requires-Dist: pydocstyle>=6.3.0
+Requires-Dist: gitpython>=3.1.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Requires-Dist: pre-commit>=3.0.0; extra == "dev"
+Dynamic: license-file
+
+# Python Code Guardian MCP Server
+
+[![MCP](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io)
+[![Python](https://img.shields.io/badge/Python-3.8+-green)](https://www.python.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+
+A comprehensive Model Context Protocol (MCP) server for Python code quality checks. This tool helps teams maintain high code quality standards through automated checks for linting, modularity, typos, structure, and test coverage.
+
+## 🚀 Features
+
+✅ **Comprehensive Code Analysis**
+- **Linting with Pylint** - PEP 8 compliance, code style, and best practices
+- **Complexity Analysis** - Cyclomatic complexity and maintainability checks
+- **Duplicate Code Detection** - Identifies redundant code blocks
+- **Typo Detection** - Catches typos in comments, docstrings, variable names, and strings
+- **Structure Validation** - File organization, naming conventions, and docstrings
+- **Test Coverage** - Ensures 75% minimum test coverage
+
+✅ **Flexible Integration**
+- Pre-commit hook support
+- On-demand checks via Cursor IDE
+- Custom rules configuration
+- Detailed reports with line numbers and suggestions
+
+✅ **Developer Friendly**
+- Summary statistics
+- Auto-fix capabilities
+- Configurable severity levels
+- Python 3.8+ support
+
+## 📦 Installation
+
+### Via pip (Recommended)
+
+```bash
+pip install python-code-guardian-mcp
+```
+
+### From Source
+
+```bash
+git clone https://github.com/yourusername/python-code-guardian-mcp.git
+cd python-code-guardian-mcp
+pip install -e .
+```
+
+## 🎯 Quick Start
+
+### 1. Add to Cursor IDE
+
+Add to your Cursor settings (`~/.cursor/config.json` or workspace `.cursor/settings.json`):
+
+```json
+{
+  "mcpServers": {
+    "python-code-guardian": {
+      "command": "python",
+      "args": [
+        "-m",
+        "python_code_guardian.server"
+      ]
+    }
+  }
+}
+```
+
+### 2. Install Pre-commit Hook
+
+```bash
+# In your Python project
+pip install pre-commit
+python-code-guardian install-hook
+```
+
+### 3. Configure (Optional)
+
+Create `.code-guardian.yaml` in your project root:
+
+```yaml
+rules:
+  pylint:
+    enabled: true
+    max_line_length: 100
+    disable:
+      - C0111  # missing-docstring for specific cases
+  
+  complexity:
+    enabled: true
+    max_complexity: 10
+    max_function_length: 50
+  
+  typos:
+    enabled: true
+    check_variables: true
+    check_comments: true
+    custom_dictionary:
+      - "customword"
+      - "anotherterm"
+  
+  structure:
+    enabled: true
+    require_docstrings: true
+    test_coverage_threshold: 75
+    naming_convention: "snake_case"
+  
+  duplicates:
+    enabled: true
+    min_lines: 6
+    ignore_patterns:
+      - "tests/*"
+```
+
+## 🛠️ MCP Tools Available
+
+The server exposes the following MCP tools:
+
+### `check_code`
+Runs all configured checks on specified files or directories.
+
+**Parameters:**
+- `path` (string): File or directory path to check
+- `checks` (array, optional): Specific checks to run
+- `fix` (boolean, optional): Attempt to auto-fix issues
+- `config_path` (string, optional): Path to custom config file
+
+**Example:**
+```json
+{
+  "path": "src/",
+  "checks": ["lint", "complexity", "typos"],
+  "fix": false
+}
+```
+
+### `get_report`
+Returns detailed analysis report for the last check.
+
+**Parameters:**
+- `format` (string): "detailed" or "summary"
+
+### `validate_pr`
+Validates all changes in a pull request.
+
+**Parameters:**
+- `base_branch` (string): Base branch to compare against
+- `pr_branch` (string): PR branch with changes
+
+### `configure_rules`
+Updates or views current configuration rules.
+
+**Parameters:**
+- `action` (string): "get" or "set"
+- `rules` (object): Rules configuration object
+
+### `fix_issues`
+Automatically fix detected issues where possible.
+
+**Parameters:**
+- `path` (string): File or directory path to fix
+- `issue_types` (array): Types of issues to fix
+
+## 💻 Usage Examples
+
+### Command Line
+
+```bash
+# Check entire project
+python-code-guardian check --path ./src
+
+# Check specific file
+python-code-guardian check --path ./src/module.py
+
+# Check with auto-fix
+python-code-guardian check --path ./src --fix
+
+# Get summary report
+python-code-guardian report --format summary
+```
+
+### Via Cursor IDE
+
+Simply ask the AI:
+- "Check the code quality of this file"
+- "Run code guardian on the current project"
+- "Fix linting issues in this function"
+- "What's the test coverage of this module?"
+
+## 📊 Output Format
+
+### Detailed Report
+
+```
+================================================================================
+CODE QUALITY REPORT
+================================================================================
+
+FILE: src/module.py
+--------------------------------------------------------------------------------
+
+[ERROR] Line 45, Column 0 - Pylint (C0301)
+  Line too long (105/100)
+  
+[WARNING] Line 78, Column 4 - Complexity (CC=12)
+  Function 'process_data' has complexity 12 (max: 10)
+  Suggestion: Consider breaking into smaller functions
+  
+[INFO] Line 12, Column 8 - Typo
+  Variable name 'caluculate' might be misspelled
+  Suggestion: Did you mean 'calculate'?
+
+[WARNING] Line 25, Column 0 - Duplicates
+  Duplicate code block found (6 lines)
+  Also in: src/other_module.py:line 45
+  Suggestion: Extract to a shared function
+
+--------------------------------------------------------------------------------
+SUMMARY STATISTICS
+--------------------------------------------------------------------------------
+Files Checked: 15
+Total Issues: 23
+  - Errors: 5
+  - Warnings: 12
+  - Info: 6
+
+Test Coverage: 78.5% ✓
+
+Issues by Category:
+  - Linting: 8
+  - Complexity: 5
+  - Typos: 3
+  - Structure: 4
+  - Duplicates: 3
+================================================================================
+```
+
+## 🎨 Custom Rules
+
+Create custom rules by extending the base checker:
+
+```python
+# custom_rules.py
+from python_code_guardian.checkers import BaseChecker
+
+class MyCustomChecker(BaseChecker):
+    async def check(self, file_path, config):
+        issues = []
+        # Your custom logic
+        with open(file_path, 'r') as f:
+            for i, line in enumerate(f, 1):
+                if 'TODO' in line:
+                    issues.append(self.create_issue(
+                        file_path=file_path,
+                        line=i,
+                        column=0,
+                        severity="info",
+                        code="TODO-CHECK",
+                        message="TODO comment found",
+                        suggestion="Consider creating a ticket"
+                    ))
+        return {"issues": issues}
+```
+
+Register in `.code-guardian.yaml`:
+
+```yaml
+custom_checkers:
+  - path: ./custom_rules.py
+    class: MyCustomChecker
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+- 📖 Documentation: [https://python-code-guardian.readthedocs.io](https://python-code-guardian.readthedocs.io)
+- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/python-code-guardian-mcp/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/python-code-guardian-mcp/discussions)
+
+## 🙏 Acknowledgments
+
+Built with:
+- [Model Context Protocol (MCP)](https://modelcontextprotocol.io)
+- [Pylint](https://pylint.org)
+- [Radon](https://radon.readthedocs.io)
+- [Codespell](https://github.com/codespell-project/codespell)
+- [Coverage.py](https://coverage.readthedocs.io)
+
+---
+
+Made with ❤️ for the global Python community by Adobe Engineers
+
