@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "python-code-guardian": {
+      "command": "python",
+      "args": [
+        "-m",
+        "python_code_guardian.server"
+      ]
+    }
+  }
+}
+
