@@ -35,25 +35,47 @@ A comprehensive Model Context Protocol (MCP) server for Python code quality chec
 - Python 3.8 or higher
 - pip (Python package manager)
 
-### Install from PyPI (Recommended)
+### Option 1: Install from PyPI (When Published)
+
+Once published to PyPI, you can install it directly:
 
 ```bash
 pip install python-code-guardian-mcp
 ```
 
-### Install from Source
+### Option 2: Install from GitHub
+
+Install directly from the GitHub repository:
 
 ```bash
-git clone https://github.com/yourusername/python-code-guardian-mcp.git
-cd python-code-guardian-mcp
+pip install git+https://github.com/priyanshi9692/py-sage-mcp.git
+```
+
+### Option 3: Install from Source (Recommended for Local Use)
+
+Clone the repository and install in development mode:
+
+```bash
+git clone https://github.com/priyanshi9692/py-sage-mcp.git
+cd py-sage-mcp
 pip install -e .
 ```
 
-### Install with Development Dependencies
+This allows you to use the MCP server without publishing to PyPI. Changes to the code will be immediately available.
+
+### Option 4: Install with Development Dependencies
+
+For development and testing:
 
 ```bash
+git clone https://github.com/priyanshi9692/py-sage-mcp.git
+cd py-sage-mcp
 pip install -e ".[dev]"
 ```
+
+### Option 5: Use Without Installation (Direct Path)
+
+You can use the MCP server directly without installing by pointing Cursor to the source directory. See the [Quick Start](#-quick-start) section for configuration details.
 
 ### Verify Installation
 
@@ -61,6 +83,8 @@ pip install -e ".[dev]"
 python-code-guardian --version
 python-code-guardian --help
 ```
+
+**Note:** You don't need to publish to PyPI to use this MCP server. Options 2, 3, and 5 allow you to use it directly from GitHub or your local machine.
 
 ## 🎯 Quick Start
 
@@ -71,6 +95,10 @@ Add the following configuration to your Cursor settings file:
 **For global configuration:** `~/.cursor/config.json`
 
 **For workspace configuration:** `.cursor/settings.json` (in your project root)
+
+#### Configuration for Installed Package (Options 1-4)
+
+If you installed the package using any of the installation methods above:
 
 ```json
 {
@@ -86,7 +114,7 @@ Add the following configuration to your Cursor settings file:
 }
 ```
 
-**Note:** If you installed in a virtual environment, use the full path to the Python executable:
+**If using a virtual environment**, use the full path to the Python executable:
 
 ```json
 {
@@ -97,6 +125,46 @@ Add the following configuration to your Cursor settings file:
         "-m",
         "python_code_guardian.server"
       ]
+    }
+  }
+}
+```
+
+#### Configuration for Direct Path (Option 5 - No Installation)
+
+If you want to use the MCP server without installing it, point directly to the source:
+
+```json
+{
+  "mcpServers": {
+    "python-code-guardian": {
+      "command": "/path/to/py-sage-mcp/venv/bin/python",
+      "args": [
+        "-m",
+        "python_code_guardian.server"
+      ],
+      "env": {
+        "PYTHONPATH": "/path/to/py-sage-mcp/src"
+      }
+    }
+  }
+}
+```
+
+**Example with absolute path:**
+
+```json
+{
+  "mcpServers": {
+    "python-code-guardian": {
+      "command": "/Users/priyanshijajoo/Desktop/python-code-guardian-mcp/venv/bin/python",
+      "args": [
+        "-m",
+        "python_code_guardian.server"
+      ],
+      "env": {
+        "PYTHONPATH": "/Users/priyanshijajoo/Desktop/python-code-guardian-mcp/src"
+      }
     }
   }
 }
@@ -387,9 +455,9 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
-- 📖 Documentation: [https://python-code-guardian.readthedocs.io](https://python-code-guardian.readthedocs.io)
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/python-code-guardian-mcp/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/python-code-guardian-mcp/discussions)
+- 📖 Documentation: [README](https://github.com/priyanshi9692/py-sage-mcp/blob/main/README.md)
+- 🐛 Issues: [GitHub Issues](https://github.com/priyanshi9692/py-sage-mcp/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/priyanshi9692/py-sage-mcp/discussions)
 
 ## 🙏 Acknowledgments
 
