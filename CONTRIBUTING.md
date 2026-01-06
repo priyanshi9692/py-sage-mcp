@@ -6,7 +6,7 @@ Thank you for your interest in contributing to Python Code Guardian! This docume
 
 1. **Fork the repository**
    ```bash
-   git clone https://github.com/adobe/python-code-guardian-mcp.git
+   git clone https://github.com/priyanshi9692/py-sage-mcp.git
    cd python-code-guardian-mcp
    ```
 
