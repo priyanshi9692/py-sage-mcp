@@ -1,0 +1,56 @@
+{
+  "name": "python-code-guardian",
+  "displayName": "Python Code Guardian",
+  "description": "Comprehensive code quality checks for Python projects including linting, complexity, typos, structure, and test coverage",
+  "version": "0.1.0",
+  "author": "Priyanshi Jajoo",
+  "license": "MIT",
+  "repository": "https://github.com/priyanshi9692/py-sage-mcp",
+  "homepage": "https://github.com/priyanshi9692/py-sage-mcp",
+  "categories": [
+    "code-quality",
+    "linting",
+    "testing",
+    "python"
+  ],
+  "installation": {
+    "pip": "python-code-guardian-mcp"
+  },
+  "configuration": {
+    "command": "python",
+    "args": ["-m", "python_code_guardian.server"]
+  },
+  "tools": [
+    {
+      "name": "check_code",
+      "description": "Run comprehensive code quality checks"
+    },
+    {
+      "name": "get_report",
+      "description": "Get detailed or summary report"
+    },
+    {
+      "name": "validate_pr",
+      "description": "Validate pull request changes"
+    },
+    {
+      "name": "configure_rules",
+      "description": "Update configuration rules"
+    },
+    {
+      "name": "fix_issues",
+      "description": "Auto-fix detected issues"
+    }
+  ],
+  "features": [
+    "Pylint integration",
+    "Complexity analysis",
+    "Typo detection",
+    "Structure validation",
+    "Test coverage tracking",
+    "Duplicate code detection",
+    "Custom rules support",
+    "Pre-commit hooks",
+    "PR validation"
+  ]
+}
