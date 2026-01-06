@@ -57,6 +57,7 @@ dev = [
 Homepage = "https://github.com/priyanshi9692/py-sage-mcp"
 Documentation = "https://github.com/priyanshi9692/py-sage-mcp/blob/main/README.md"
 Repository = "https://github.com/priyanshi9692/py-sage-mcp.git"
+Issues = "https://github.com/priyanshi9692/py-sage-mcp/issues"
 
 [project.scripts]
 python-code-guardian = "python_code_guardian.cli:main"
